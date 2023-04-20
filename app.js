@@ -21,16 +21,14 @@ app.get("/restaurants/:restaurant_id", (req, res) => {
 });
 
 app.get("/search", (req, res) => {
-  const restaurantsName = restaurantList.results.filter((item) =>
-    item.name.toLowerCase().includes(req.query.keyword.toLowerCase())
-  );
-
-  const restaurantsCategory = restaurantList.results.filter((item) =>
-    item.category.toLowerCase().includes(req.query.keyword.toLowerCase())
+  const restaurantsFilter = restaurantList.results.filter(
+    (item) =>
+      item.name.toLowerCase().includes(req.query.keyword.toLowerCase()) ||
+      item.category.toLowerCase().includes(req.query.keyword.toLowerCase())
   );
 
   res.render("index", {
-    restaurants: restaurantsCategory,
+    restaurants: restaurantsFilter,
     keyword: req.query.keyword,
   });
 });
