@@ -2,11 +2,30 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const exphbs = require("express-handlebars");
-const restaurantList = require("./restaurant.json");
+const mongoose = require("mongoose");
+const restaurantList = require("./models/seeds/restaurant.json");
+
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
+mongoose.connect(process.env.MONGODB_URI, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+});
+
+const db = mongoose.connection;
+db.on("error", () => {
+  console.log("mongodb error");
+});
+db.once("open", () => {
+  console.log("mongodb connected");
+});
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
+//connect 靜態資料
 app.use(express.static("public"));
 
 app.get("/", (req, res) => {
@@ -20,6 +39,7 @@ app.get("/restaurants/:restaurant_id", (req, res) => {
   res.render("show", { restaurants: restaurants });
 });
 
+//搜尋keyword
 app.get("/search", (req, res) => {
   const restaurantsFilter = restaurantList.results.filter(
     (item) =>
