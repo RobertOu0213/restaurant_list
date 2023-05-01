@@ -4,6 +4,7 @@ const port = 3000;
 const exphbs = require("express-handlebars");
 const mongoose = require("mongoose");
 const restaurantList = require("./models/seeds/restaurant.json");
+const Restaurants = require("./models/restaurants");
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -28,8 +29,34 @@ app.set("view engine", "handlebars");
 //connect 靜態資料
 app.use(express.static("public"));
 
+//body parser
+app.use(express.urlencoded({ extended: true }));
+
+//瀏覽全部餐廳
+// app.get("/", (req, res) => {
+//   res.render("index", { restaurants: restaurantList.results });
+// });
+
 app.get("/", (req, res) => {
-  res.render("index", { restaurants: restaurantList.results });
+  Restaurants.find()
+    .lean()
+    .then((restaurants) => {
+      res.render("index", { restaurants });
+    })
+    .catch((error) => console.log(error));
+});
+
+//瀏覽新餐廳
+app.get("/restaurants/new", (req, res) => {
+  res.render("new");
+});
+
+//新增新餐廳
+app.post("/restaurants", (req, res) => {
+  const name = req.body.name;
+  return Restaurants.create({ name })
+    .then(() => res.redirect("/"))
+    .catch((error) => console.log(error));
 });
 
 app.get("/restaurants/:restaurant_id", (req, res) => {

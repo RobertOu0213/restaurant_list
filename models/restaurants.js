@@ -10,4 +10,4 @@ const restaurantSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("restaurants", restaurantSchema);
+module.exports = mongoose.model("Restaurants", restaurantSchema);
