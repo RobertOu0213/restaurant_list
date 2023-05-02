@@ -1,10 +1,8 @@
 # 餐廳清單 + CRUD :wink:
 
-
-=======
 ![螢幕擷取畫面 2023-05-02 164410](https://user-images.githubusercontent.com/115865251/235627761-9c308f80-276a-4eb8-9610-4de55ac287c6.jpg)
 
->>>>>>> 43eda4a0c740dcddd17711db4dd841734e8be1f3
+
 
 <h1> 功能 </h1>
 
