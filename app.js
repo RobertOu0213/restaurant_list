@@ -5,6 +5,7 @@ const exphbs = require("express-handlebars");
 const mongoose = require("mongoose");
 const restaurantList = require("./models/seeds/restaurant.json");
 const Restaurants = require("./models/restaurants");
+const restaurants = require("./models/restaurants");
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -33,7 +34,6 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
 //瀏覽全部餐廳
-
 app.get("/", (req, res) => {
   Restaurants.find()
     .lean()
@@ -65,24 +65,39 @@ app.get("/restaurants/:id", (req, res) => {
     .catch((error) => console.log(error));
 });
 
+//瀏覽編輯餐廳
+app.get("/restaurants/:id/edit", (req, res) => {
+  const id = req.params.id;
+  return Restaurants.findById(id)
+    .lean()
+    .then((restaurant) => res.render("edit", { restaurant }))
+    .catch((error) => console.log(error));
+});
+
+//修改資料
+app.post("/restaurants/:id/edit", (req, res) => {
+  const id = req.params.id;
+  const name = req.body.name;
+  return Restaurants.findById(id)
+    .then((restaurant) => {
+      restaurant.name = name;
+      return restaurant.save();
+    })
+    .then(() => res.redirect(`/restaurants/${id}`))
+    .catch((error) => console.log(error));
+});
+
 //搜尋keyword
 app.get("/search", (req, res) => {
-  const restaurantsFilter = restaurantList.results.filter(
-    (item) =>
-      item.name
+  Restaurants.find()
+    .lean()
+    .then((restaurant) => {
+      let restaurantFilter = restaurant.name
         .toLowerCase()
         .trim()
-        .includes(req.query.keyword.toLowerCase().trim()) ||
-      item.category
-        .toLowerCase()
-        .trim()
-        .includes(req.query.keyword.toLowerCase().trim())
-  );
-
-  res.render("index", {
-    restaurants: restaurantsFilter,
-    keyword: req.query.keyword,
-  });
+        .includes(req.query.keyword.toLowerCase().trim());
+      res.render("index", { restaurants: restaurantFilter });
+    });
 });
 
 app.listen(port, () => {
