@@ -5,7 +5,6 @@ const exphbs = require("express-handlebars");
 const mongoose = require("mongoose");
 const restaurantList = require("./models/seeds/restaurant.json");
 const Restaurants = require("./models/restaurants");
-const restaurants = require("./models/restaurants");
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();

@@ -26,7 +26,10 @@
 </div>
 
 {{! restaurants list }}
-<a href="/restaurants/new">create</a>
+<a
+  class="rounded m-3 p-2 bg-success text-white fs-5 text-decoration-none"
+  href="/restaurants/new"
+>Create Restaurant</a>
 
 <div class="container mt-5">
   <div class="row">
@@ -36,7 +39,7 @@
           <div class="column">
 
             <a href="/restaurants/{{this.id}}" class="text-secondary">
-              <div class="card mb-3">
+              <div class="card mb-1">
                 <img
                   class="card-img-top"
                   src="{{this.image}}"
@@ -60,10 +63,16 @@
               </div>
 
             </a>
-            <div class="d-inline-flex p-2 bd-highlight">
-              <a href="/restaurants/{{this._id}}">Detail</a>
-              <a href="/restaurants/{{this._id}}/edit">Edit</a>
-              <form action="/restaurants/{{this._id}}/delete" method="post">
+            <div
+              class="d-flex p-2 mb-2 bd-highlight align-items-end justify-content-end"
+            >
+              <a class="m-1" href="/restaurants/{{this._id}}">Detail</a>
+              <a class="m-1" href="/restaurants/{{this._id}}/edit">Edit</a>
+              <form
+                class="m-1"
+                action="/restaurants/{{this._id}}/delete"
+                method="post"
+              >
                 <button type="submit">Delete</button>
               </form>
             </div>
