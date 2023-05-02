@@ -87,6 +87,15 @@ app.post("/restaurants/:id/edit", (req, res) => {
     .catch((error) => console.log(error));
 });
 
+//刪除資料
+app.post("/restaurants/:id/delete", (req, res) => {
+  const id = req.params.id;
+  return Restaurants.findById(id)
+    .then((restaurant) => restaurant.remove())
+    .then(() => res.redirect("/"))
+    .catch((error) => console.log(error));
+});
+
 //搜尋keyword
 app.get("/search", (req, res) => {
   Restaurants.find()

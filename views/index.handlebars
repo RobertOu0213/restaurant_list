@@ -40,7 +40,7 @@
                 <img
                   class="card-img-top"
                   src="{{this.image}}"
-                  style="height: 100px"
+                  style="height: 200px"
                 />
                 <div class="card-body p-3">
                   <h6 class="card-title mb-1">Restaurant Name:
@@ -63,7 +63,9 @@
             <div class="d-inline-flex p-2 bd-highlight">
               <a href="/restaurants/{{this._id}}">Detail</a>
               <a href="/restaurants/{{this._id}}/edit">Edit</a>
-              <a href="">Delete</a>
+              <form action="/restaurants/{{this._id}}/delete" method="post">
+                <button type="submit">Delete</button>
+              </form>
             </div>
 
           </div>
