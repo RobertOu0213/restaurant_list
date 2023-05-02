@@ -33,9 +33,6 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
 //瀏覽全部餐廳
-// app.get("/", (req, res) => {
-//   res.render("index", { restaurants: restaurantList.results });
-// });
 
 app.get("/", (req, res) => {
   Restaurants.find()
@@ -59,11 +56,13 @@ app.post("/restaurants", (req, res) => {
     .catch((error) => console.log(error));
 });
 
-app.get("/restaurants/:restaurant_id", (req, res) => {
-  const restaurants = restaurantList.results.find(
-    (item) => item.id.toString() === req.params.restaurant_id
-  );
-  res.render("show", { restaurants: restaurants });
+//瀏覽特定餐廳
+app.get("/restaurants/:id", (req, res) => {
+  const id = req.params.id;
+  return Restaurants.findById(id)
+    .lean()
+    .then((restaurant) => res.render("detail", { restaurant }))
+    .catch((error) => console.log(error));
 });
 
 //搜尋keyword
