@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const exphbs = require("express-handlebars");
-const Restaurants = require("../restaurants");
 const restaurantList = require("./restaurant.json");
 
 if (process.env.NODE_ENV !== "production") {
