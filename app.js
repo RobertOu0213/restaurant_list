@@ -49,8 +49,7 @@ app.get("/restaurants/new", (req, res) => {
 
 //新增新餐廳
 app.post("/restaurants", (req, res) => {
-  const name = req.body.name;
-  return Restaurants.create({ name })
+  return Restaurants.create(req.body)
     .then(() => res.redirect("/"))
     .catch((error) => console.log(error));
 });
@@ -76,10 +75,9 @@ app.get("/restaurants/:id/edit", (req, res) => {
 //修改資料
 app.post("/restaurants/:id/edit", (req, res) => {
   const id = req.params.id;
-  const name = req.body.name;
-  return Restaurants.findById(id)
+
+  return Restaurants.findByIdAndUpdate(id, req.body)
     .then((restaurant) => {
-      restaurant.name = name;
       return restaurant.save();
     })
     .then(() => res.redirect(`/restaurants/${id}`))
@@ -100,11 +98,16 @@ app.get("/search", (req, res) => {
   Restaurants.find()
     .lean()
     .then((restaurant) => {
-      const FilterRestaurant = restaurant.filter((data) =>
-        data.name
-          .toLowerCase()
-          .trim()
-          .includes(req.query.keyword.toLowerCase().trim())
+      const FilterRestaurant = restaurant.filter(
+        (data) =>
+          data.name
+            .toLowerCase()
+            .trim()
+            .includes(req.query.keyword.toLowerCase().trim()) ||
+          data.category
+            .toLowerCase()
+            .trim()
+            .includes(req.query.keyword.toLowerCase().trim())
       );
       res.render("index", { restaurants: FilterRestaurant });
     });

@@ -1,5 +1,107 @@
 <form action="/restaurants/{{restaurant._id}}/edit" method="post">
-  <input type="text" name="name" value="{{restaurant.name}}" />
-  <button type="submit">Save</button>
-  <a href="/">back</a>
+  <div class="container d-flex flex-column mt-3" style="width:400px">
+    <div class="m-2">
+      <label for="name" class="form-label">店名<span>:</span></label>
+      <input
+        class="form-control"
+        type="text"
+        name="name"
+        placeholder="九龍冰室"
+        id="name"
+        value="{{restaurant.name}}"
+      />
+    </div>
+
+    <div class="m-2">
+      <label for="category" class="form-label">分類<span>:</span></label>
+      <input
+        class="form-control"
+        type="text"
+        name="category"
+        placeholder="港式茶餐廳"
+        id="category"
+        value="{{restaurant.category}}"
+      />
+    </div>
+
+    <div class="m-2">
+      <label for="image" class="form-label">圖片連結<span>:</span></label>
+      <input
+        class="form-control"
+        type="url"
+        name="image"
+        placeholder="http://ninedragons.com"
+        id="image"
+        value="{{restaurant.image}}"
+      />
+    </div>
+
+    <div class="m-2">
+      <label for="location" class="form-label">地址<span>:</span></label>
+      <input
+        class="form-control"
+        type="text"
+        name="location"
+        placeholder="九龍區123號"
+        id="location"
+        value="{{restaurant.location}}"
+      />
+    </div>
+
+    <div class="m-2">
+      <label for="phone" class="form-label">電話<span>:</span></label>
+      <input
+        class="form-control"
+        type="tel"
+        name="phone"
+        placeholder="09-999-89"
+        id="phone"
+        value="{{restaurant.phone}}"
+      />
+    </div>
+
+    <div class="m-2 d-flex flex-column">
+      <label for="google_map" class="form-label">Google地圖連結<span
+        >:</span></label>
+      <input
+        class="form-control"
+        type="url"
+        name="google_map"
+        placeholder="http://ninedragons/googlemap.com"
+        id="google_map"
+        value="{{restaurant.google_map}}"
+      />
+    </div>
+
+    <div class="m-2">
+      <label for="rating" class="form-label">評分<span>:</span></label>
+      <input
+        class="form-control"
+        type="number"
+        name="rating"
+        placeholder="5"
+        id="rating"
+        min="0"
+        max="5"
+        step="0.1"
+        value="{{restaurant.rating}}"
+      />
+    </div>
+
+    <div class="m-2">
+      <label for="description" class="form-label">敘述<span>:</span></label>
+      <textarea
+        class="form-control"
+        name="description"
+        placeholder="description..."
+        id="description"
+        rows="2"
+        value="{{restaurant.description}}"
+      >
+      </textarea>
+    </div>
+
+    <button class="mt-3" type="submit">儲存餐廳</button>
+  </div>
+
 </form>
